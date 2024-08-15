@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -111,8 +112,8 @@ class CurrenciesController extends AppController
 
     public function convert()
     {
-         // Fetch all currency codes from the database
-         $currencies = $this->Currencies->find('list', [
+        // Fetch all currency codes from the database
+        $currencies = $this->Currencies->find('list', [
             'keyField' => 'code',
             'valueField' => 'code'
         ])->toArray();
@@ -121,6 +122,9 @@ class CurrenciesController extends AppController
         $selectedCurrency = null;
         $buyResult = null;
         $sellResult = null;
+        $x = null;
+        $option = floatval($this->request->getData('option'));
+
 
         if ($this->request->is('post')) {
             $selectedCode = $this->request->getData('code');
@@ -131,15 +135,23 @@ class CurrenciesController extends AppController
                 'conditions' => ['code' => $selectedCode]
             ])->first();
 
-            if ($selectedCurrency) {
-                $buyResult = $amount * $selectedCurrency->buyat;
-                $sellResult = $amount * $selectedCurrency->sellat;
+            if ($selectedCurrency && $option == '1') {
+                // $buyResult = $amount * $selectedCurrency->buyat;
+                $x = "I will receive: $". $amount * $selectedCurrency->sellat. " CAD";
             } else {
-                $this->Flash->error(__('Invalid currency code selected.'));
+                $this->Flash->error(__('Invalid currency code selected1.'));
+            }
+
+            if ($selectedCurrency && $option == '0') {
+                // $buyResult = $amount * $selectedCurrency->buyat;
+                // $sellResult = $amount * $selectedCurrency->sellat;
+                $x ="I will pay: $". $amount * $selectedCurrency->buyat." CAD";
+            } else {
+                $this->Flash->error(__('Invalid currency code selected2.'));
             }
         }
 
         // Pass the currencies and results to the view
-        $this->set(compact('currencies', 'selectedCurrency', 'buyResult', 'sellResult'));
+        $this->set(compact('currencies', 'selectedCurrency', 'buyResult', 'sellResult','x'));
     }
 }
