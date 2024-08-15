@@ -49,21 +49,3 @@ we buy
 1.348 
 -->
 
-
-<html>
-<style>
-    .b {
-        width: 320px;
-        height: 50px;
-        padding: 10px;
-        border: 5px solid gray;
-        margin: 0;
-    }
-</style>
-<div class="b">
-    <?php
-    // Database connection variables
-    ?>
-</div>
-
-</html>
