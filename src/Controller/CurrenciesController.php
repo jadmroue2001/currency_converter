@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\AppController;
+
 /**
  * Currencies Controller
  *
@@ -137,21 +139,17 @@ class CurrenciesController extends AppController
 
             if ($selectedCurrency && $option == '1') {
                 // $buyResult = $amount * $selectedCurrency->buyat;
-                $x = "I will receive: $". $amount * $selectedCurrency->sellat. " CAD";
-            } else {
-                $this->Flash->error(__('Invalid currency code selected1.'));
-            }
-
-            if ($selectedCurrency && $option == '0') {
+                $x = "I will receive: $" . $amount * $selectedCurrency->sellat . " CAD";
+            } elseif ($selectedCurrency && $option == '0') {
                 // $buyResult = $amount * $selectedCurrency->buyat;
                 // $sellResult = $amount * $selectedCurrency->sellat;
-                $x ="I will pay: $". $amount * $selectedCurrency->buyat." CAD";
+                $x = "I will pay: $" . $amount * $selectedCurrency->buyat . " CAD";
             } else {
                 $this->Flash->error(__('Invalid currency code selected2.'));
             }
         }
 
         // Pass the currencies and results to the view
-        $this->set(compact('currencies', 'selectedCurrency', 'buyResult', 'sellResult','x'));
+        $this->set(compact('currencies', 'selectedCurrency', 'buyResult', 'sellResult', 'x'));
     }
 }
